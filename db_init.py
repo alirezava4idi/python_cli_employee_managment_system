@@ -5,7 +5,8 @@ def create_table():
     database = SQLite4("database.db")
     try:
         database.connect()
-        query = "CREATE TABLE employee (id INT PRIMARY_KEY AUTO_INCREMENT, name VARCHAR, post VARCHAR, salary VARCHAR)"
-        database.execute(query)
+        query = "CREATE TABLE employee (id INTEGER PRIMARY KEY, name VARCHAR, post VARCHAR, salary VARCHAR)"
+        result = database.execute(query)
+        print(result)
     except :
         print("database connection failed")

@@ -1,6 +1,19 @@
 import db_init
+from sqlite4 import SQLite4
 
-# db_init.create_table()
+
+def add_Employee():
+    name = input("Enter Employee name: ")
+    post = input("Enter Employee post: ")
+    salary = input("Enter Employee salary: ")
+
+    database = SQLite4("database.db")
+    try:
+        database.connect()
+        query = f"INSERT INTO employee (name, post, salary) VALUES ('{name}', '{post}', '{salary}');"
+        database.execute(query)   
+    except:
+        print("Something went wrong, try again later")
 
 def menu():
     print("Welcome to Employee Managment Record")
@@ -14,7 +27,7 @@ def menu():
     try:
         ch = int(input("Enter your Choice: "))
         if ch == 1:
-            pass
+            add_Employee()
         elif ch == 2:
             pass
         elif ch == 3:
@@ -29,4 +42,6 @@ def menu():
         print("++++++++++ invalid input +++++++++")
         menu()
 
+
+db_init.create_table()
 menu()
