@@ -1,8 +1,8 @@
 import db_init
-from sqlite4 import SQLite4
+import sqlite3
 
-database = SQLite4("database.db")
-database.connect()
+connection = sqlite3.connect("database.db")
+
 
 def add_Employee():
     name = input("Enter Employee name: ")
@@ -11,7 +11,8 @@ def add_Employee():
 
     try:
         query = f"INSERT INTO employee (name, post, salary) VALUES ('{name}', '{post}', '{salary}');"
-        database.execute(query)   
+        connection.execute(query)   
+        connection.commit()
         print("Employee was successfully created")
     except:
         print("Something went wrong, try again later")
@@ -19,11 +20,16 @@ def add_Employee():
 def remove_Employee():
     try:
         id = int(input("Enter the Employee's id: "))
-        query = f"DELETE from employee where id='{id}';"
-        database.execute(query)
+        emp = connection.execute(f"SELECT * from employee where id={id}").fetchone()
+        if emp is None:
+            print("No Employee found!")
+            raise
+        query = f"DELETE from employee where id={id}"
+        connection.execute(query)
+        connection.commit()
         print("Employee was successfully deleted")
     except:
-        print("Error")
+        print("Something went wrong, try again later")
 
 def menu():
     print("Welcome to Employee Managment Record")

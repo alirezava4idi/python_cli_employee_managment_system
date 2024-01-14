@@ -7,6 +7,5 @@ def create_table():
         database.connect()
         query = "CREATE TABLE employee (id INTEGER PRIMARY KEY, name VARCHAR, post VARCHAR, salary VARCHAR)"
         result = database.execute(query)
-        print(result)
     except :
         print("database connection failed")
