@@ -1,19 +1,29 @@
 import db_init
 from sqlite4 import SQLite4
 
+database = SQLite4("database.db")
+database.connect()
 
 def add_Employee():
     name = input("Enter Employee name: ")
     post = input("Enter Employee post: ")
     salary = input("Enter Employee salary: ")
 
-    database = SQLite4("database.db")
     try:
-        database.connect()
         query = f"INSERT INTO employee (name, post, salary) VALUES ('{name}', '{post}', '{salary}');"
         database.execute(query)   
+        print("Employee was successfully created")
     except:
         print("Something went wrong, try again later")
+
+def remove_Employee():
+    try:
+        id = int(input("Enter the Employee's id: "))
+        query = f"DELETE from employee where id='{id}';"
+        database.execute(query)
+        print("Employee was successfully deleted")
+    except:
+        print("Error")
 
 def menu():
     print("Welcome to Employee Managment Record")
@@ -29,7 +39,7 @@ def menu():
         if ch == 1:
             add_Employee()
         elif ch == 2:
-            pass
+            remove_Employee()
         elif ch == 3:
             pass
         elif ch == 4:
